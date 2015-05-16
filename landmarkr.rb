@@ -10,7 +10,7 @@ require 'haml'
 use Rack::Session::Pool
 
 configure do
-  DataMapper.setup(:default, "sqlite3:///#{File.dirname(File.expand_path(__FILE$
+  DataMapper.setup(:default, "sqlite3:///#{File.dirname(File.expand_path(__FILE__))}/db/landmarkr.sqlite3")
   DataMapper.auto_upgrade!
 end
 
