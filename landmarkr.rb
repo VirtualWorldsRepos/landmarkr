@@ -3,18 +3,16 @@ require 'rubygems'
 require 'sinatra'
 gem 'dm-core'
 require 'dm-core'
-require 'Haml'
-
+require 'dm-migrations'
+require 'haml'
 
 # Configuration
 use Rack::Session::Pool
-  
+
 configure do
-  DataMapper.setup(:default, "sqlite3:///#{File.dirname(File.expand_path(__FILE__))}/db/landmarkr.sqlite3")
+  DataMapper.setup(:default, "sqlite3:///#{File.dirname(File.expand_path(__FILE$
   DataMapper.auto_upgrade!
 end
-
-
 
 # Routes
 
@@ -65,31 +63,6 @@ get "/landmarks/:agent_id" do
   haml :landmarks
 end
 
-get "/test" do
-  builder do |xml|
-    xml.instruct! :xml, :version => '1.1'
-      
-    end
-
-    xml.instruct! :xml, :version => '1.1'
-    xml.person do
-      xml.name "Francis Albert Sinatra"
-      xml.aka "Frank Sinatra"
-      xml.aka "Ol' Blue Eyes"
-      xml.aka "The Chairman of the Board"
-      xml.born 'date' => '1915-12-12' do
-        xml.text! "Hoboken, New Jersey, U.S.A."
-      end
-      xml.died 'age' => 82
-    end
-  end
-end
-
-get "/test.xml" do
-  content_type 'text/html', :charset => 'utf-8'
-  ""
-end
-
 post "/landmarks" do
     landmark = Landmark.new(
       :name => params[:name],
@@ -114,8 +87,6 @@ not_found do
   redirect "/"
 end
 
-
-
 # Helpers
 
 helpers do
@@ -132,13 +103,11 @@ helpers do
   end
 end
 
-
-
 # Models
 
 class Agent
   include DataMapper::Resource
-  property :id,    Integer, :serial => true
+  property :id,    Integer, Serial
   property :name,  String
   property :key,   String
 
@@ -149,7 +118,7 @@ Agent.auto_upgrade!
 
 class Landmark
   include DataMapper::Resource
-  property :id,         Integer, :serial => true
+  property :id,         Integer, Serial
   property :name,       String
   property :region,     String
   property :x,          Integer
